@@ -9,10 +9,7 @@ inspection_bp = Blueprint(
 )
 
 
-# --------------------------------------------------
-# GET: Retrieve all inspections
-# URL: GET /api/inspections/
-# --------------------------------------------------
+
 @inspection_bp.route("/", methods=["GET"])
 def get_inspections():
     connection = None
@@ -49,10 +46,7 @@ def get_inspections():
             connection.close()
 
 
-# --------------------------------------------------
-# GET: Retrieve one inspection
-# URL: GET /api/inspections/<inspection_id>
-# --------------------------------------------------
+
 @inspection_bp.route("/<int:inspection_id>", methods=["GET"])
 def get_inspection(inspection_id):
     connection = None
@@ -94,10 +88,6 @@ def get_inspection(inspection_id):
             connection.close()
 
 
-# --------------------------------------------------
-# GET: Retrieve inspections for a specific tyre
-# URL: GET /api/inspections/tyre/<tyre_id>
-# --------------------------------------------------
 @inspection_bp.route("/tyre/<int:tyre_id>", methods=["GET"])
 def get_tyre_inspections(tyre_id):
     connection = None
@@ -135,10 +125,6 @@ def get_tyre_inspections(tyre_id):
             connection.close()
 
 
-# --------------------------------------------------
-# POST: Create a new inspection
-# URL: POST /api/inspections/
-# --------------------------------------------------
 @inspection_bp.route("/", methods=["POST"])
 def create_inspection():
     connection = None

@@ -5,10 +5,7 @@ from database.db import get_db_connection
 tyre_bp = Blueprint("tyres", __name__, url_prefix="/api/tyres")
 
 
-# --------------------------------------------------
-# GET: Retrieve all tyres
-# URL: GET /api/tyres/
-# --------------------------------------------------
+
 @tyre_bp.route("/", methods=["GET"])
 def get_tyres():
     connection = None
@@ -53,10 +50,6 @@ def get_tyres():
             connection.close()
 
 
-# --------------------------------------------------
-# GET: Retrieve a single tyre by ID
-# URL: GET /api/tyres/<tyre_id>
-# --------------------------------------------------
 @tyre_bp.route("/<int:tyre_id>", methods=["GET"])
 def get_tyre(tyre_id):
     connection = None
@@ -106,10 +99,6 @@ def get_tyre(tyre_id):
             connection.close()
 
 
-# --------------------------------------------------
-# POST: Register a new tyre
-# URL: POST /api/tyres/
-# --------------------------------------------------
 @tyre_bp.route("/", methods=["POST"])
 def register_tyre():
     connection = None
@@ -197,10 +186,6 @@ def register_tyre():
             connection.close()
 
 
-# --------------------------------------------------
-# PUT: Update an existing tyre
-# URL: PUT /api/tyres/<tyre_id>
-# --------------------------------------------------
 @tyre_bp.route("/<int:tyre_id>", methods=["PUT"])
 def update_tyre(tyre_id):
     connection = None
@@ -299,11 +284,6 @@ def update_tyre(tyre_id):
         if connection:
             connection.close()
 
-
-# --------------------------------------------------
-# DELETE: Retire a tyre (Soft Delete)
-# URL: DELETE /api/tyres/<tyre_id>
-# --------------------------------------------------
 @tyre_bp.route("/<int:tyre_id>", methods=["DELETE"])
 def delete_tyre(tyre_id):
     connection = None
