@@ -195,3 +195,178 @@ def register_tyre():
 
         if connection:
             connection.close()
+
+
+# --------------------------------------------------
+# PUT: Update an existing tyre
+# URL: PUT /api/tyres/<tyre_id>
+# --------------------------------------------------
+@tyre_bp.route("/<int:tyre_id>", methods=["PUT"])
+def update_tyre(tyre_id):
+    connection = None
+    cursor = None
+
+    try:
+        data = request.get_json(silent=True)
+
+        if not isinstance(data, dict) or not data:
+            return jsonify({
+                "status": "error",
+                "message": "A valid JSON request body is required"
+            }), 400
+
+        allowed_fields = {
+            "vehicle_id",
+            "current_owner_user_id",
+            "qr_code",
+            "brand",
+            "model",
+            "tyre_size",
+            "serial_number",
+            "manufacture_date",
+            "installation_date",
+            "lifecycle_status"
+        }
+
+        updates = {
+            key: value
+            for key, value in data.items()
+            if key in allowed_fields
+        }
+
+        if not updates:
+            return jsonify({
+                "status": "error",
+                "message": "No valid fields provided for update"
+            }), 400
+
+        connection = get_db_connection()
+
+        if connection is None:
+            return jsonify({
+                "status": "error",
+                "message": "Database connection failed"
+            }), 500
+
+        cursor = connection.cursor(dictionary=True)
+
+        cursor.execute(
+            "SELECT tyre_id FROM tyres WHERE tyre_id = %s",
+            (tyre_id,)
+        )
+
+        if cursor.fetchone() is None:
+            return jsonify({
+                "status": "error",
+                "message": "Tyre not found"
+            }), 404
+
+        set_clause = ", ".join(
+            f"{field} = %s" for field in updates
+        )
+
+        query = f"""
+            UPDATE tyres
+            SET {set_clause}
+            WHERE tyre_id = %s
+        """
+
+        values = list(updates.values()) + [tyre_id]
+
+        cursor.execute(query, values)
+        connection.commit()
+
+        return jsonify({
+            "status": "success",
+            "message": "Tyre updated successfully",
+            "tyre_id": tyre_id,
+            "updated_fields": list(updates.keys())
+        }), 200
+
+    except Exception as error:
+        if connection:
+            connection.rollback()
+
+        return jsonify({
+            "status": "error",
+            "message": str(error)
+        }), 500
+
+    finally:
+        if cursor:
+            cursor.close()
+
+        if connection:
+            connection.close()
+
+
+# --------------------------------------------------
+# DELETE: Retire a tyre (Soft Delete)
+# URL: DELETE /api/tyres/<tyre_id>
+# --------------------------------------------------
+@tyre_bp.route("/<int:tyre_id>", methods=["DELETE"])
+def delete_tyre(tyre_id):
+    connection = None
+    cursor = None
+
+    try:
+        connection = get_db_connection()
+
+        if connection is None:
+            return jsonify({
+                "status": "error",
+                "message": "Database connection failed"
+            }), 500
+
+        cursor = connection.cursor(dictionary=True)
+
+        cursor.execute("""
+            SELECT tyre_id, lifecycle_status
+            FROM tyres
+            WHERE tyre_id = %s
+        """, (tyre_id,))
+
+        tyre = cursor.fetchone()
+
+        if tyre is None:
+            return jsonify({
+                "status": "error",
+                "message": "Tyre not found"
+            }), 404
+
+        if tyre["lifecycle_status"] == "REMOVED":
+            return jsonify({
+                "status": "error",
+                "message": "Tyre has already been removed"
+            }), 409
+
+        cursor.execute("""
+            UPDATE tyres
+            SET lifecycle_status = 'REMOVED'
+            WHERE tyre_id = %s
+        """, (tyre_id,))
+
+        connection.commit()
+
+        return jsonify({
+            "status": "success",
+            "message": "Tyre retired successfully",
+            "tyre_id": tyre_id,
+            "lifecycle_status": "REMOVED"
+        }), 200
+
+    except Exception as error:
+        if connection:
+            connection.rollback()
+
+        return jsonify({
+            "status": "error",
+            "message": str(error)
+        }), 500
+
+    finally:
+        if cursor:
+            cursor.close()
+
+        if connection:
+            connection.close()

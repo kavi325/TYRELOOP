@@ -3,12 +3,14 @@ from flask import Flask, jsonify
 from config import Config
 from database.db import get_db_connection
 from routes.tyre_routes import tyre_bp
+from routes.inspection_routes import inspection_bp
 
 
 def create_app():
     app = Flask(__name__)
     app.config.from_object(Config)
     app.register_blueprint(tyre_bp)
+    app.register_blueprint(inspection_bp)
 
     @app.route("/", methods=["GET"])
     def home():
