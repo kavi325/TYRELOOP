@@ -1,0 +1,134 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TYRELOOP | Client Dashboard</title>
+    <link rel="stylesheet" href="../css/dashboard.css">
+</head>
+<body>
+
+<div class="dashboard">
+
+    <aside class="sidebar">
+        <h2>TYRELOOP</h2>
+        <p>CLIENT PORTAL</p>
+
+        <nav>
+            <a href="#" class="active">Dashboard</a>
+            <a href="#tyres">My Tyres</a>
+            <a href="#inspections">Inspection History</a>
+            <a href="#recovery">Recovery Information</a>
+            <a href="#profile">My Profile</a>
+        </nav>
+
+        <a href="login.html" class="logout">Logout</a>
+    </aside>
+
+    <main class="main-content">
+
+        <header class="topbar">
+            <div>
+                <h1>Client Dashboard</h1>
+                <p>Welcome to your TYRELOOP account</p>
+            </div>
+            <div class="user-info">Client Account</div>
+        </header>
+
+        <section class="summary-cards">
+            <div class="card">
+                <h3>Registered Tyres</h3>
+                <p>0</p>
+            </div>
+            <div class="card">
+                <h3>Inspections</h3>
+                <p>0</p>
+            </div>
+            <div class="card">
+                <h3>Active Tyres</h3>
+                <p>0</p>
+            </div>
+            <div class="card">
+                <h3>Recovery Records</h3>
+                <p>0</p>
+            </div>
+        </section>
+
+        <section class="content-section" id="tyres">
+            <h2>My Registered Tyres</h2>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Tyre ID</th>
+                            <th>Brand</th>
+                            <th>Model</th>
+                            <th>Size</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td colspan="5">No tyre records available.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="content-section" id="inspections">
+            <h2>Inspection History</h2>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Inspection ID</th>
+                            <th>Tyre ID</th>
+                            <th>Date</th>
+                            <th>Inspection Type</th>
+                            <th>Result</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td colspan="5">No inspection records available.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <h2>AI Inspection Summary</h2>
+            <p>No AI inspection summaries available.</p>
+            <small>AI predictions are not final safety approvals.</small>
+        </section>
+
+        <section class="content-section">
+            <h2>Tread Depth Readings</h2>
+            <p>No tread-depth readings available.</p>
+        </section>
+
+        <section class="content-section">
+            <h2>Tyre Lifecycle Status</h2>
+            <p>No lifecycle information available.</p>
+        </section>
+
+        <section class="content-section" id="recovery">
+            <h2>Recovery Information</h2>
+            <p>No recovery records available.</p>
+        </section>
+
+        <section class="content-section" id="profile">
+            <h2>My Profile</h2>
+            <p>Name: Not available</p>
+            <p>Email: Not available</p>
+        </section>
+
+    </main>
+</div>
+
+<script src="../js/client-dashboard.js"></script>
+</body>
+</html>

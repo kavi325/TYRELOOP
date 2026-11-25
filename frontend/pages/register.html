@@ -1,0 +1,64 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TYRELOOP | Registration</title>
+    <link rel="stylesheet" href="../css/auth.css">
+</head>
+<body>
+
+    <div class="auth-container">
+        <div class="auth-card">
+
+            <h1>TYRE<span>LOOP</span></h1>
+            <p>Smart Tyre Management System</p>
+
+            <h2>Create Account</h2>
+            <p>Register your account</p>
+
+            <form id="registerForm">
+
+                <label>Full Name</label>
+                <input type="text" id="name"
+                    placeholder="Enter your full name" required>
+
+                <label>Email Address</label>
+                <input type="email" id="email"
+                    placeholder="Enter your email" required>
+
+                <label>Password</label>
+                <input type="password" id="password"
+                    placeholder="Create password" required>
+
+                <label>Confirm Password</label>
+                <input type="password" id="confirmPassword"
+                    placeholder="Confirm password" required>
+
+                <label>
+                    <input type="checkbox" id="showPassword">
+                    Show Password
+                </label>
+
+                <button type="submit" id="registerButton">
+                    Create Account
+                </button>
+
+                <p id="message"></p>
+
+            </form>
+
+            <div class="auth-footer">
+                Already have an account?
+                <a href="login.html">Login</a>
+            </div>
+
+            <a href="index.html">Back to Home</a>
+
+        </div>
+    </div>
+
+    <script src="../js/auth.js"></script>
+</body>
+</html>
